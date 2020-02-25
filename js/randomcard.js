@@ -56,6 +56,11 @@ getCard = async function(code) {
 }
 
 window.onload = function() {
+  document.getElementById('new-card').onclick = e => {
+    e.preventDefault();
+    location.reload();
+  }
+
   let set = Math.ceil(Math.random() * 13);
   set = ('00' + set).slice(-2);
 
