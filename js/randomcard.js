@@ -3,16 +3,55 @@ const setCounts = [113, 120, 55, 120, 55, 120, 55, 120, 55, 114, 120, 120, 57, 1
 
 const colors = {
   'Neutral': '#a8a8a8',
-  'NBN': '#d4c906',
-  'Jinteki': '#db0909',
-  'Weyland': '#41663c',
-  'Haas-Bioroid': '#920aad',
-  'Anarch': '#ed8d0e',
-  'Criminal': '#0a7aa6',
-  'Shaper': '#44a805',
-  'Sunny LeBeau': '#4a2652',
-  'Apex': '#700404',
-  'Adam': '#614c0e'
+  'NBN': '#FAE593',
+  'Jinteki': '#E9A68F',
+  'Weyland': '#A6B8A9',
+  'Haas-Bioroid': '#C8ACCB',
+  'Anarch': '#F6C5A1',
+  'Criminal': '#9AC4D5',
+  'Shaper': '#D2E9AA',
+  'Sunny LeBeau': '#685B6B',
+  'Apex': '#E07D96',
+  'Adam': '#FCD6A0'
+}
+
+function getFaction(faction_code) {
+  switch(faction_code) {
+    case 'neutral-corp':
+    case 'neutral-runner':
+      return 'Neutral';
+    case 'nbn':
+      return 'NBN';
+    case 'jinteki':
+      return 'Jinteki';
+    case 'haas-bioroid':
+      return 'Haas-Bioroid';
+    case 'weyland-consortium':
+      return 'Weyland';
+    case 'criminal':
+      return 'Criminal';
+    case 'shaper':
+      return 'Shaper';
+    case 'anarch':
+      return 'Anarch';
+    case 'apex':
+      return 'Apex';
+    case 'sunny-lebeau':
+      return 'Sunny LeBeau';
+    case 'adam':
+      return 'Adam';
+  }
+}
+
+getCard = async function(code) {
+  const url = 'https://netrunnerdb.com/api/2.0/public/card/' + code;
+  return await fetch(url)
+    .then(res => {
+      return res.json();
+    })
+    .then(cjson => {
+      return cjson.data[0];
+    });
 }
 
 window.onload = function() {
@@ -63,47 +102,4 @@ window.onload = function() {
 
     document.getElementById('cardInfo').classList.remove('hidden');
   });
-}
-
-getCard = async function(code) {
-  const url = 'https://netrunnerdb.com/api/2.0/public/card/' + code;
-  return await fetch(url)
-    .then(res => {
-      return res.json();
-    })
-    .then(cjson => {
-      return cjson.data[0];
-    });
-}
-
-function addSymbols(string) {
-  
-}
-
-function getFaction(faction_code) {
-  switch(faction_code) {
-    case 'neutral-corp':
-    case 'neutral-runner':
-      return 'Neutral';
-    case 'nbn':
-      return 'NBN';
-    case 'jinteki':
-      return 'Jinteki';
-    case 'haas-bioroid':
-      return 'Haas-Bioroid';
-    case 'weyland-consortium':
-      return 'Weyland';
-    case 'criminal':
-      return 'Criminal';
-    case 'shaper':
-      return 'Shaper';
-    case 'anarch':
-      return 'Anarch';
-    case 'apex':
-      return 'Apex';
-    case 'sunny-lebeau':
-      return 'Sunny LeBeau';
-    case 'adam':
-      return 'Adam';
-  }
 }
