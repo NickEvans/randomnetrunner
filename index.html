@@ -1,0 +1,82 @@
+<head>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    }
+
+    .col {
+      float: left;
+    }
+
+    #cardInfo {
+      max-width: 720px;
+      margin: 10% auto;
+      padding: 1.25rem;
+      border: 1px solid #eee;
+      border-left: 5px solid red;
+      border-radius: 0.25rem;
+      box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.12)
+    }
+
+    #cardInfo h1 {
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    #cardFlavor {
+      font-size: 0.75rem;
+      font-style: italic;
+    }
+
+    #cardType {
+      margin-top: 0.25rem;
+      font-style: italic;
+    }
+
+    errata {
+      display: block;
+      font-style: italic;
+    }
+
+    trace {
+      font-style: italic;
+    }
+
+    #content {
+      overflow: auto;
+    }
+
+    #cardText {
+      margin: 1em 0;
+    }
+
+    #cardText p {
+      margin-block-start: 0.5em;
+      margin-block-end: 0.5em;
+    }
+
+    .hidden {
+      visibility: hidden;
+    }
+  </style>
+  <script src="js/randomcard.js"></script>
+</head>
+<body>
+  <div id="cardInfo" class="hidden">
+    <div id="content">
+      <div id="text" class="col" style="width: 75%; padding-right: 1.25em;">
+        <h1 id="cardTitle"></h1>
+        <p id="cardType"></p>
+        <div id="cardText"></div>
+        <p id="cardFlavor"></p>
+      </div>
+      <div id="img" class="col" style="width: 25%; height: 235px">
+        <img id="cardImg" style="width: 100%">
+      </div>
+    </div>
+  </div>
+</body>
