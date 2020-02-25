@@ -56,14 +56,18 @@ getCard = async function(code) {
 }
 
 window.onload = function() {
-  const set = ('00' + Math.ceil(Math.random() * 13)).slice(-2);
-  const card = ('000' + Math.ceil(Math.random() * setCounts[parseInt(set - 1)])).slice(-3);
+  let set = Math.ceil(Math.random() * 13);
+  set = ('00' + set).slice(-2);
 
+  let card = Math.ceil(Math.random() * setCounts[set - 1]);
+  card = ('000' + card).slice(-3);
+  
   const cardCode = set + card;
 
   getCard(cardCode).then(info => {
     document.getElementById('cardTitle').innerHTML = info.title;
 
+    // Wrap body text in <p> tags
     const bodyText = info.text.replace(/[^\r\n]+/gm, line => '<p>' + line + '</p>');
     document.getElementById('cardText').innerHTML = bodyText;
 
@@ -100,8 +104,8 @@ window.onload = function() {
     document.getElementById('cardImg').src = (info.image_url === undefined) ? `https://netrunnerdb.com/card_image/${cardCode}.png` : info.image_url;
 
     document.getElementById('nrdb-link').href = 'https://netrunnerdb.com/en/card/' + cardCode;
-    
   }).then( () => {
+    // Reveal card after info is retreived
     document.getElementById('cardInfo').classList.remove('hidden');
   });
 }
