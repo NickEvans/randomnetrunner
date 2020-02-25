@@ -57,6 +57,8 @@ window.onload = function() {
 
     document.getElementById('cardInfo').style.borderLeftColor = colors[faction];
 
+    document.getElementById('cardTitle').style.background = 'linear-gradient(180deg,rgba(255,255,255,0) 50%, ' + colors[faction] + ' 50%)';
+
     document.getElementById('cardImg').src = (info.image_url === undefined) ? `https://netrunnerdb.com/card_image/${cardCode}.png` : info.image_url;
 
     document.getElementById('cardInfo').classList.remove('hidden');

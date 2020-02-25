@@ -1,11 +1,14 @@
 <head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
     }
     body {
+      /*
       font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-
+      */
+      font-family: 'Roboto Mono', monospace;
     }
 
     .col {
@@ -16,14 +19,17 @@
       max-width: 720px;
       margin: 10% auto;
       padding: 1.25rem;
+      overflow: hidden;
+      /*
       border: 1px solid #eee;
       border-left: 5px solid red;
       border-radius: 0.25rem;
-      box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.12)
+      */
     }
 
     #cardInfo h1 {
-      font-size: 1.5rem;
+      display: inline;
+      font-size: 1.75rem;
       margin: 0;
     }
 
@@ -35,6 +41,7 @@
     #cardType {
       margin-top: 0.25rem;
       font-style: italic;
+      
     }
 
     errata {
@@ -52,6 +59,8 @@
 
     #cardText {
       margin: 1em 0;
+      padding-left: 1em;
+      border-left: 6px solid #eee;
     }
 
     #cardText p {
@@ -75,7 +84,7 @@
         <p id="cardFlavor"></p>
       </div>
       <div id="img" class="col" style="width: 25%; height: 235px">
-        <img id="cardImg" style="width: 100%">
+        <img id="cardImg" style="height: 100%">
       </div>
     </div>
   </div>
