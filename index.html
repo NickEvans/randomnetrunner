@@ -3,7 +3,8 @@
   <style>
     /* Define accent color based on card faction */
     :root {
-      --main-color: #fff;
+      /* Default to blank */
+      --main-color: rgba(255, 255, 255, 0);
     }
 
     * {
@@ -11,6 +12,9 @@
     }
 
     body {
+      
+      /* background: var(--main-color); */
+      
       font-family: 'Roboto Mono', monospace;
       font-size: 100%;
     }
@@ -59,7 +63,7 @@
     #cardText {
       margin: 1em 0;
       padding-left: 1em;
-      border-left: 6px solid #eee;
+      border-left: 6px solid rgba(0, 0, 0, 0.10);
     }
 
     #cardText p {
@@ -98,6 +102,18 @@
     .hidden {
       visibility: hidden;
     }
+
+    img { 
+      border: 6px solid rgba(0, 0, 0, 0.10);
+      border-radius: 10px;
+      height: 223px;
+      width: 160px;
+
+      /* Transition image in after load */
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
   </style>
   <script src="js/randomcard.js"></script>
 </head>

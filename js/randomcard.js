@@ -106,7 +106,12 @@ window.onload = function() {
 
     root.style.setProperty('--main-color', colors[faction]);
 
-    document.getElementById('cardImg').src = (info.image_url === undefined) ? `https://netrunnerdb.com/card_image/${cardCode}.png` : info.image_url;
+    const cardImg = document.getElementById('cardImg');
+    cardImg.src = (info.image_url === undefined) ? `https://netrunnerdb.com/card_image/${cardCode}.png` : info.image_url;
+    // Fade image in after load
+    cardImg.onload = function() {
+      this.style.opacity = 1;
+    }
 
     document.getElementById('nrdb-link').href = 'https://netrunnerdb.com/en/card/' + cardCode;
   }).then( () => {
