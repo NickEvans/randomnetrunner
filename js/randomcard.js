@@ -15,11 +15,10 @@ const colors = {
   'Adam': '#FCD6A0'
 }
 
+const root = document.documentElement;
+
 function getFaction(faction_code) {
   switch(faction_code) {
-    case 'neutral-corp':
-    case 'neutral-runner':
-      return 'Neutral';
     case 'nbn':
       return 'NBN';
     case 'jinteki':
@@ -40,6 +39,8 @@ function getFaction(faction_code) {
       return 'Sunny LeBeau';
     case 'adam':
       return 'Adam';
+    default:
+      return 'Neutral';
   }
 }
 
@@ -94,12 +95,13 @@ window.onload = function() {
     }
     document.getElementById('cardType').innerHTML = costText;
 
-    document.getElementById('cardInfo').style.borderLeftColor = colors[faction];
-
-    document.getElementById('cardTitle').style.background = 'linear-gradient(180deg,rgba(255,255,255,0) 50%, ' + colors[faction] + ' 50%)';
+    root.style.setProperty('--main-color', colors[faction]);
 
     document.getElementById('cardImg').src = (info.image_url === undefined) ? `https://netrunnerdb.com/card_image/${cardCode}.png` : info.image_url;
 
+    document.getElementById('nrdb-link').href = 'https://netrunnerdb.com/en/card/' + cardCode;
+    
+  }).then( () => {
     document.getElementById('cardInfo').classList.remove('hidden');
   });
 }

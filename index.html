@@ -1,13 +1,15 @@
 <head>
   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap" rel="stylesheet">
   <style>
+    /* Define accent color based on card faction */
+    :root {
+      --main-color: #fff;
+    }
+
     * {
       box-sizing: border-box;
     }
     body {
-      /*
-      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      */
       font-family: 'Roboto Mono', monospace;
     }
 
@@ -20,17 +22,13 @@
       margin: 10% auto;
       padding: 1.25rem;
       overflow: hidden;
-      /*
-      border: 1px solid #eee;
-      border-left: 5px solid red;
-      border-radius: 0.25rem;
-      */
     }
 
     #cardInfo h1 {
       display: inline;
       font-size: 1.75rem;
       margin: 0;
+      background: linear-gradient(180deg,rgba(255,255,255,0) 50%, var(--main-color) 50%);
     }
 
     #cardFlavor {
@@ -41,7 +39,6 @@
     #cardType {
       margin-top: 0.25rem;
       font-style: italic;
-      
     }
 
     errata {
@@ -68,6 +65,34 @@
       margin-block-end: 0.5em;
     }
 
+    #button-group {
+      margin: 4em auto;
+      max-width: 75%;
+      text-align: center;
+    }
+
+    #credits {
+      margin: 4em auto;
+      max-width: 368px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #1F1C25;
+    }
+
+    .button {
+      padding: 0.5em 0 0.25em 0;
+      margin: 0 0.25em;
+      border-bottom: 6px solid var(--main-color);
+      text-decoration: none;
+      color: #000;
+      transition: background 0.25s;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background: var(--main-color);
+    }
+
     .hidden {
       visibility: hidden;
     }
@@ -87,5 +112,12 @@
         <img id="cardImg" style="height: 100%">
       </div>
     </div>
+  </div>
+  <div id="button-group">
+    <a class="button" onclick="location.reload()">See a new card</a>
+    <a class="button" id="nrdb-link" href="#">View on NetrunnerDB</a>
+  </div>
+  <div id="credits">
+    View a random card from Android: Netrunner. Add a fun twist to opening a new tab! Learn about new cards or rediscover forgotten favorites. Uses the public NetrunnerDB API. Built by <a href="github.com/nickevans">Nick Evans</a>.
   </div>
 </body>
