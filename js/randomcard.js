@@ -14,7 +14,8 @@ const factions = {
     'apex': { 'name': 'Apex', 'color': '#E07D96' },
     'sunny-lebeau': { 'name': 'Sunny LeBeau', 'color': '#685B6B' },
     'adam': { 'name': 'Adam', 'color': '#FCD6A0' },
-    'neurtral': { 'name': 'Neutral', 'color': '#A8A8A8' }
+    'neutral-corp': { 'name': 'Neutral', 'color': '#A8A8A8' },
+    'neutral-runner': { 'name': 'Neutral', 'color': '#A8A8A8' }
 }
 
 const icons = {
