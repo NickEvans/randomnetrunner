@@ -1,47 +1,31 @@
-// Number of cards in each set, to determine rand max
-const setCounts = [113, 120, 55, 120, 55, 120, 55, 120, 55, 114, 120, 120, 57, 132, 120, 58];
-
-const colors = {
-  'Neutral': '#a8a8a8',
-  'NBN': '#FAE593',
-  'Jinteki': '#E9A68F',
-  'Weyland': '#A6B8A9',
-  'Haas-Bioroid': '#C8ACCB',
-  'Anarch': '#F6C5A1',
-  'Criminal': '#9AC4D5',
-  'Shaper': '#D2E9AA',
-  'Sunny LeBeau': '#685B6B',
-  'Apex': '#E07D96',
-  'Adam': '#FCD6A0'
-}
-
 const root = document.documentElement;
 
-function getFaction(faction_code) {
-  switch(faction_code) {
-    case 'nbn':
-      return 'NBN';
-    case 'jinteki':
-      return 'Jinteki';
-    case 'haas-bioroid':
-      return 'Haas-Bioroid';
-    case 'weyland-consortium':
-      return 'Weyland';
-    case 'criminal':
-      return 'Criminal';
-    case 'shaper':
-      return 'Shaper';
-    case 'anarch':
-      return 'Anarch';
-    case 'apex':
-      return 'Apex';
-    case 'sunny-lebeau':
-      return 'Sunny LeBeau';
-    case 'adam':
-      return 'Adam';
-    default:
-      return 'Neutral';
-  }
+const setCounts = [113, 120, 55, 120, 55, 120, 55, 120, 
+  55, 114, 120, 120, 57, 132, 120, 58];
+
+const factions = {
+    'nbn': { 'name': 'NBN', 'color': '#FAE593' },
+    'jinteki': { 'name': 'Jinteki', 'color': '#E9A68F' },
+    'haas-bioroid': { 'name': 'Haas-Bioroid', 'color': '#C8ACCB' },
+    'weyland-consortium': { 'name': 'Weyland', 'color': '#A6B8A9' },
+    'criminal': { 'name': 'Criminal', 'color': '#9AC4D5' },
+    'shaper': { 'name': 'Shaper', 'color': '#D2E9AA' },
+    'anarch': { 'name': 'Anarch', 'color': '#F6C5A1' },
+    'apex': { 'name': 'Apex', 'color': '#E07D96' },
+    'sunny-lebeau': { 'name': 'Sunny LeBeau', 'color': '#685B6B' },
+    'adam': { 'name': 'Adam', 'color': '#FCD6A0' },
+    'neurtral': { 'name': 'Neutral', 'color': '#A8A8A8' }
+}
+
+const icons = {
+  '[subroutine]': '\ue900',
+  '[credit]': '\ue90B',
+  '[click]': '\ue909',
+  '[trash]': '\ue905',
+  '[link]': '\ue908',
+  '[recurring-credit]': '\ue90A',
+  '[mu]': '\ue904',
+  '[interrupt]': '\ue92B'
 }
 
 getCard = async function(code) {
@@ -70,44 +54,63 @@ window.onload = function() {
   const cardCode = set + card;
 
   getCard(cardCode).then(info => {
-    document.getElementById('cardTitle').innerHTML = info.title;
+    const faction = factions[info.faction_code].name;
+    const type = info.type_code.replace(/^\w/, c => c.toUpperCase());
 
-    // Wrap body text in <p> tags
-    const bodyText = info.text.replace(/[^\r\n]+/gm, line => '<p>' + line + '</p>');
-    document.getElementById('cardText').innerHTML = bodyText;
+    root.style.setProperty('--main-color', factions[info.faction_code].color);
 
-    if(info.flavor)
-      document.getElementById('cardFlavor').innerHTML = info.flavor;
+    // Format card name
+    let title = info.title;
+    if(info.uniqueness === true)
+      title = '\u2666 ' + title;
+    document.getElementById('cardTitle').innerHTML = title;
     
-    const f = info.faction_code;
-    const faction = getFaction(f);
-
-    const t = info.type_code;
-    const type = t.replace(/^\w/, c => c.toUpperCase());
-
-    let costText;
-    switch(type) {
-      case 'Ice':
-      case 'Asset':
-      case 'Upgrade':
-        costText = faction + ' ' + type + ' &bull; Rez: ' + info.cost;
-        break;
-      case 'Agenda':
-        costText = faction + ' ' + type + ' &bull; Adv: ' + info.advancement_cost + ' &bull; Points: ' + info.agenda_points;
-        break;
-      case 'Identity':
-        costText = type + ' &bull; Deck: ' + info.minimum_deck_size + ' &bull; Influence: ' + info.influence_limit;
-        break;
-      default:
-        costText = faction + ' ' + type + ' &bull; Cost: ' + info.cost;
-        break;
-    }
+    // Format cost and stats
+    let costText = [];
+    if(type === 'Identity' &&
+      (faction === 'Apex' || faction === 'Sunny LeBeau' || faction === 'Adam'))
+        costText.push(type);
+    else 
+      costText.push(faction + ' ' + type);
+    if(info.cost != undefined)
+      if(type === 'Ice' || type === 'Asset' || type === 'Upgrade')
+        costText.push('Rez: ' + info.cost);
+      else
+        costText.push('Cost: ' + info.cost);
+    if(info.memory_cost !== undefined)
+      costText.push('MU: ' + info.memory_cost);
+    if(info.strength !== undefined)
+      costText.push('Strength: ' + info.strength);
+    if(info.trash_cost !== undefined)
+      costText.push('Trash: ' + info.trash_cost);
+    if(info.advancement_cost !== undefined)
+      costText.push('Adv: ' + info.advancement_cost);
+    if(info.agenda_points !== undefined)
+      costText.push('Points: ' + info.agenda_points);
+    if(info.minimum_deck_size !== undefined)
+      costText.push('Deck: ' + info.minimum_deck_size);
+    if(info.influence_limit !== undefined)
+      costText.push('Influence: ' + info.influence_limit);
+    costText = costText.join(' &bull; ');
     document.getElementById('cardType').innerHTML = costText;
 
-    root.style.setProperty('--main-color', colors[faction]);
+    // Format card body
+    let bodyText = info.text.replace(/[^\r\n]+/gm, line => '<p>' + line + '</p>');
+    bodyText = bodyText.replace(/\[[a-z]+\-*[a-z]+\]/gm, code => '<span class="icon">' + icons[code] + '</span>');
+    bodyText = bodyText.replace(/Trace (\d)/gm, t => '<b>Trace' + t.slice(-1).sup() + '</b> - ');
+    document.getElementById('cardText').innerHTML = bodyText;
 
+    // Flavor text
+    if(info.flavor)
+      document.getElementById('cardFlavor').innerHTML = info.flavor;
+
+    // Image
     const cardImg = document.getElementById('cardImg');
-    cardImg.src = (info.image_url === undefined) ? `https://netrunnerdb.com/card_image/${cardCode}.png` : info.image_url;
+    if(info.image_url === undefined) 
+      cardImg.src = `https://netrunnerdb.com/card_image/${cardCode}.png`
+    else 
+      cardImg.src = info.image_url;
+
     // Fade image in after load
     cardImg.onload = function() {
       this.style.opacity = 1;
@@ -117,5 +120,9 @@ window.onload = function() {
   }).then( () => {
     // Reveal card after info is retreived
     document.getElementById('cardInfo').classList.remove('hidden');
+
+    // Play highlight animation on title
+    document.getElementById('cardTitle').classList.add('animated');
   });
+
 }
