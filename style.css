@@ -4,7 +4,7 @@
 
 :root {
   /* Set by JS; determined by card faction */
-  --main-color: rgba(255, 255, 255, 0);
+  --main-color: #A8A8A8;
   --shadow: rgba(0, 0, 0, 0.1);
 }
 

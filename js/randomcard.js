@@ -1,3 +1,10 @@
+/*
+ * TODO: 
+ * - Background color to card image container
+ * - Loading animation during fetch()
+ * - Add faction symbol by/under name
+*/
+
 const root = document.documentElement;
 
 const setCounts = [113, 120, 55, 120, 55, 120, 55, 120, 
@@ -37,6 +44,8 @@ getCard = async function(code) {
     })
     .then(cjson => {
       return cjson.data[0];
+    }).catch(err => {
+      console.log('Error with card #' + code + ': ' + err );
     });
 }
 
@@ -73,7 +82,7 @@ window.onload = function() {
         costText.push(type);
     else 
       costText.push(faction + ' ' + type);
-    if(info.cost != undefined)
+    if(info.cost !== undefined)
       if(type === 'Ice' || type === 'Asset' || type === 'Upgrade')
         costText.push('Rez: ' + info.cost);
       else
@@ -96,10 +105,12 @@ window.onload = function() {
     document.getElementById('cardType').innerHTML = costText;
 
     // Format card body
-    let bodyText = info.text.replace(/[^\r\n]+/gm, line => '<p>' + line + '</p>');
-    bodyText = bodyText.replace(/\[[a-z]+\-*[a-z]+\]/gm, code => '<span class="icon">' + icons[code] + '</span>');
-    bodyText = bodyText.replace(/Trace (\d)/gm, t => '<b>Trace' + t.slice(-1).sup() + '</b> - ');
-    document.getElementById('cardText').innerHTML = bodyText;
+    if(info.text) {
+      let bodyText = info.text.replace(/[^\r\n]+/gm, line => '<p>' + line + '</p>');
+      bodyText = bodyText.replace(/\[[a-z]+\-*[a-z]+\]/gm, code => '<span class="icon">' + icons[code] + '</span>');
+      bodyText = bodyText.replace(/Trace (\d)/gm, t => '<b>Trace' + t.slice(-1).sup() + '</b> - ');
+      document.getElementById('cardText').innerHTML = bodyText;
+    }
 
     // Flavor text
     if(info.flavor)
