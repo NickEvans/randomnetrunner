@@ -64,6 +64,8 @@ window.onload = function() {
   const cardCode = set + card;
 
   getCard(cardCode).then(info => {
+    var imageLoadFlag = false;
+
     const faction = factions[info.faction_code].name;
     const type = info.type_code.replace(/^\w/, c => c.toUpperCase());
 
@@ -123,13 +125,16 @@ window.onload = function() {
     else 
       cardImg.src = info.image_url;
 
-    // Fade image in after load
     cardImg.onload = function() {
+      // Reveal card
       this.style.opacity = 1;
     }
 
     document.getElementById('nrdb-link').href = 'https://netrunnerdb.com/en/card/' + cardCode;
   }).then( () => {
+    // Hide loader
+    document.getElementById('loader-main').classList.add('hidden');
+
     // Reveal card after info is retreived
     document.getElementById('cardInfo').classList.remove('hidden');
 

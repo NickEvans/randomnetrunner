@@ -4,6 +4,9 @@
   <script src="js/randomcard.js"></script>
 </head>
 <body>
+  <!-- Loader animation -->
+  <div class="loader" id="loader-main"></div>
+
   <div id="cardInfo" class="hidden">
     <div id="content">
       <div id="text" class="col" style="width: 75%; padding-right: 1.25em;">
@@ -16,14 +19,14 @@
         <img id="cardImg">
       </div>
     </div>
-  </div>
-  <div class="bottom">
-    <div id="button-group">
-      <a class="button" id="new-card">See a new card</a>
-      <a class="button" id="nrdb-link" href="#">View on NetrunnerDB</a>
-    </div>
-    <div id="credits">
-      View a random card from Android: Netrunner. Add a fun touch to opening a new tab! Learn about new cards or rediscover forgotten favorites. Uses the public NetrunnerDB API. Built by <a href="https://www.github.com/nickevans">Nick Evans</a>.
+    <div class="bottom">
+      <div id="button-group">
+        <a class="button" id="new-card">See a new card</a>
+        <a class="button" id="nrdb-link" href="#">View on NetrunnerDB</a>
+      </div>
+      <div id="credits">
+        View a random card from Android: Netrunner. Add a fun touch to opening a new tab! Learn about new cards or rediscover forgotten favorites. Uses the public NetrunnerDB API. Built by <a href="https://www.github.com/nickevans">Nick Evans</a>.
+      </div>
     </div>
   </div>
 </body>
