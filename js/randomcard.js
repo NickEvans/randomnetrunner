@@ -1,28 +1,21 @@
-/*
- * TODO: 
- * - Background color to card image container
- * - Loading animation during fetch()
- * - Add faction symbol by/under name
-*/
-
 const root = document.documentElement;
 
 const setCounts = [113, 120, 55, 120, 55, 120, 55, 120, 
   55, 114, 120, 120, 57, 132, 120, 58];
 
 const factions = {
-    'nbn': { 'name': 'NBN', 'color': '#FAE593' },
-    'jinteki': { 'name': 'Jinteki', 'color': '#E9A68F' },
-    'haas-bioroid': { 'name': 'Haas-Bioroid', 'color': '#C8ACCB' },
-    'weyland-consortium': { 'name': 'Weyland', 'color': '#A6B8A9' },
-    'criminal': { 'name': 'Criminal', 'color': '#9AC4D5' },
-    'shaper': { 'name': 'Shaper', 'color': '#D2E9AA' },
-    'anarch': { 'name': 'Anarch', 'color': '#F6C5A1' },
-    'apex': { 'name': 'Apex', 'color': '#E07D96' },
-    'sunny-lebeau': { 'name': 'Sunny LeBeau', 'color': '#685B6B' },
-    'adam': { 'name': 'Adam', 'color': '#FCD6A0' },
-    'neutral-corp': { 'name': 'Neutral', 'color': '#A8A8A8' },
-    'neutral-runner': { 'name': 'Neutral', 'color': '#A8A8A8' }
+    'nbn': { 'name': 'NBN', 'color': '#FAE593', 'icon': '\ue915' },
+    'jinteki': { 'name': 'Jinteki', 'color': '#E9A68F', 'icon': '\ue916' },
+    'haas-bioroid': { 'name': 'Haas-Bioroid', 'color': '#C8ACCB', 'icon': '\ue918' },
+    'weyland-consortium': { 'name': 'Weyland', 'color': '#A6B8A9', 'icon': '\ue917' },
+    'criminal': { 'name': 'Criminal', 'color': '#9AC4D5', 'icon': '\ue919' },
+    'shaper': { 'name': 'Shaper', 'color': '#D2E9AA', 'icon': '\ue91b' },
+    'anarch': { 'name': 'Anarch', 'color': '#F6C5A1', 'icon': '\ue91a' },
+    'apex': { 'name': 'Apex', 'color': '#E07D96','icon': '\ue91e' },
+    'sunny-lebeau': { 'name': 'Sunny LeBeau', 'color': '#685B6B', 'icon': '\ue91c' },
+    'adam': { 'name': 'Adam', 'color': '#FCD6A0', 'icon': '\ue91d' },
+    'neutral-corp': { 'name': 'Neutral', 'color': '#A8A8A8', 'icon': '' },
+    'neutral-runner': { 'name': 'Neutral', 'color': '#A8A8A8', 'icon': '' }
 }
 
 const icons = {
@@ -68,6 +61,7 @@ window.onload = function() {
 
     const faction = factions[info.faction_code].name;
     const type = info.type_code.replace(/^\w/, c => c.toUpperCase());
+    const icon = factions[info.faction_code].icon;
 
     root.style.setProperty('--main-color', factions[info.faction_code].color);
 
@@ -83,7 +77,7 @@ window.onload = function() {
       (faction === 'Apex' || faction === 'Sunny LeBeau' || faction === 'Adam'))
         costText.push(type);
     else 
-      costText.push(faction + ' ' + type);
+      costText.push('<span class="icon">' + icon + '</span> ' + faction + ' ' + type);
     if(info.cost !== undefined)
       if(type === 'Ice' || type === 'Asset' || type === 'Upgrade')
         costText.push('Rez: ' + info.cost);

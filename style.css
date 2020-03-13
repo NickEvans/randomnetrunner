@@ -159,6 +159,7 @@ trace {
 
 .icon {
   font-family: netrunner;
+  font-style: normal;
 }
 
 .loader {
