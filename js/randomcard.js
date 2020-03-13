@@ -57,8 +57,6 @@ window.onload = function() {
   const cardCode = set + card;
 
   getCard(cardCode).then(info => {
-    var imageLoadFlag = false;
-
     const faction = factions[info.faction_code].name;
     const type = info.type_code.replace(/^\w/, c => c.toUpperCase());
     const icon = factions[info.faction_code].icon;
