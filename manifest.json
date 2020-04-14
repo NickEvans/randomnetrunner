@@ -6,11 +6,11 @@
     "newtab": "index.html"
   },
   "icons": {
-    "16": "img/icon-16.png",
-    "48": "img/icon-48.png",
-    "128": "img/icon-128.png"
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
   },
   "browser_action": {
-    "default_icon": "img/icon-48.png"
+    "default_icon": "icons/icon-48.png"
   }
 }
