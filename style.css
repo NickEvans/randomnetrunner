@@ -11,7 +11,7 @@
 @font-face {
   /* Icon font */
   font-family: 'netrunner';
-  src: url('fonts/netrunner.ttf');
+  src: url('./netrunner.ttf');
   font-weight: normal;
   font-style: normal;
 }
