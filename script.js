@@ -1,8 +1,5 @@
 const root = document.documentElement;
 
-const setCounts = [113, 120, 55, 120, 55, 120, 55, 120,
-  55, 114, 120, 120, 57, 132, 120, 58];
-
 const factions = {
   'nbn': { 'name': 'NBN', 'color': '#FAE593', 'icon': '\ue915' },
   'jinteki': { 'name': 'Jinteki', 'color': '#E9A68F', 'icon': '\ue916' },
@@ -30,10 +27,18 @@ const icons = {
 }
 
 window.onload = function () {
-  document.getElementById('new-card').onclick = e => {
-    e.preventDefault();
-    location.reload();
-  }
+  const cardCode = generateCardCode();
+
+  setClickHandlers(cardCode);
+
+  fetchCardInfo(cardCode)
+    .then(info => renderCard(info))
+    .then(revealCard);
+}
+
+function generateCardCode() {
+  const setCounts = [113, 120, 55, 120, 55, 120, 55, 120,
+    55, 114, 120, 120, 57, 132, 120, 58];
 
   let set = Math.ceil(Math.random() * 13);
   set = ('00' + set).slice(-2);
@@ -43,13 +48,22 @@ window.onload = function () {
 
   const cardCode = set + card;
 
-  fetchCardInfo(cardCode)
-    .then(info => renderCard(info))
-    .then(revealCard);
+  return cardCode;
 }
 
-fetchCardInfo = async function (code) {
-  const url = 'https://netrunnerdb.com/api/2.0/public/card/' + code;
+function setClickHandlers(cardCode) {
+  // "See a New Card"
+  document.getElementById('new-card').onclick = e => {
+    e.preventDefault();
+    location.reload();
+  }
+
+  // "View on NetrunnerDB"
+  document.getElementById('nrdb-link').href = `https://netrunnerdb.com/en/card/${cardCode}`;
+}
+
+fetchCardInfo = async function(code) {
+  const url = `https://netrunnerdb.com/api/2.0/public/card/${code}`;
   return await fetch(url)
     .then(res => {
       return res.json();
@@ -57,7 +71,7 @@ fetchCardInfo = async function (code) {
     .then(cjson => {
       return cjson.data[0];
     }).catch(err => {
-      console.log('Error with card #' + code + ': ' + err);
+      console.log(`Error with card #${code}: ${err}`);
     });
 }
 
@@ -119,12 +133,11 @@ function renderCard(info) {
   // Image
   const cardImgElement = document.getElementById('cardImg');
   cardImgElement.src = info.image_url ?? `https://netrunnerdb.com/card_image/${cardCode}.png`;
-  cardImgElement.onload = function() {
+  cardImgElement.onload = function () {
     this.style.opacity = 1;
   }
 
-  // Set NRDB link
-  document.getElementById('nrdb-link').href = `https://netrunnerdb.com/en/card/${cardCode}`;
+
 }
 
 function revealCard() {
