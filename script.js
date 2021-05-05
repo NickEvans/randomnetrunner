@@ -97,32 +97,31 @@ function renderCard(info) {
   root.style.setProperty("--main-color", factions[info.faction_code].color);
 
   // Format card name
-  let title = info.title;
-  if (info.uniqueness) title = `\u2666 ${title}`;
+  const title = info.uniqueness ? `\u2666 ${info.title}` : info.title;
   document.getElementById("cardTitle").innerHTML = title;
 
   // Format cost and stats
-  let costText = [];
-  type === "Identity" &&
-  (factionName === "Apex" ||
-    factionName === "Sunny LeBeau" ||
-    factionName === "Adam")
-    ? costText.push(type)
-    : costText.push(`<span class="icon">${icon}</span> ${factionName} ${type}`);
-
-  if (info.cost)
-    type === "Ice" || type === "Asset" || type === "Upgrade"
-      ? costText.push(`Rez: ${info.cost}`)
-      : costText.push(`Cost: ${info.cost}`);
   const costHTML = [
-    info.memory_cost && costText.push(`MU: ${info.memory_cost}`),
-    info.strength && costText.push(`Strength: ${info.strength}`),
-    info.trash_cost && costText.push(`Trash: ${info.trash_cost}`),
-    info.advancement_cost && costText.push(`Adv: ${info.advancement_cost}`),
-    info.agenda_points && costText.push(`Points: ${info.advancement_cost}`),
-    info.minimum_deck_size && costText.push(`Deck: ${info.minimum_deck_size}`),
-    info.influence_limit && costText.push(`Influence: ${info.influence_limit}`),
-  ].join(" &bull; ");
+    type === "Identity" &&
+    (factionName === "Apex" ||
+      factionName === "Sunny LeBeau" ||
+      factionName === "Adam")
+      ? type
+      : `<span class="icon">${icon}</span> ${factionName} ${type}`,
+    info.cost &&
+      (type === "Ice" || type === "Asset" || type === "Upgrade"
+        ? `Rez: ${info.cost}`
+        : `Cost: ${info.cost}`),
+    info.memory_cost && `MU: ${info.memory_cost}`,
+    info.strength && `Strength: ${info.strength}`,
+    info.trash_cost && `Trash: ${info.trash_cost}`,
+    info.advancement_cost && `Adv: ${info.advancement_cost}`,
+    info.agenda_points && `Points: ${info.advancement_cost}`,
+    info.minimum_deck_size && `Deck: ${info.minimum_deck_size}`,
+    info.influence_limit && `Influence: ${info.influence_limit}`,
+  ]
+    .filter((x) => x != null)
+    .join(" &bull; ");
   document.getElementById("cardType").innerHTML = costHTML;
 
   // Filter card text body
@@ -145,7 +144,7 @@ function renderCard(info) {
   cardImgElement.src =
     info.image_url ??
     `https://netrunnerdb.com/card_image/large/${cardCode}.jpg`;
-  cardImgElement.onload = function () {
+  cardImgElement.onload = function() {
     this.style.opacity = 1;
   };
 }
