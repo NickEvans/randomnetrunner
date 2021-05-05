@@ -144,7 +144,7 @@ function renderCard(info) {
   const cardImgElement = document.getElementById("cardImg");
   cardImgElement.src =
     info.image_url ??
-    `https://netrunnerdb.com/card_image/large/${cardCode}.png`;
+    `https://netrunnerdb.com/card_image/large/${cardCode}.jpg`;
   cardImgElement.onload = function () {
     this.style.opacity = 1;
   };
