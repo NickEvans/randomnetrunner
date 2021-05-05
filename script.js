@@ -99,7 +99,7 @@ function renderCard(info) {
 
   if (info.cost)
     if (type === 'Ice' || type === 'Asset' || type === 'Upgrade')
-      costText.push(`Res: ${info.cost}`);
+      costText.push(`Rez: ${info.cost}`);
     else
       costText.push(`Cost: ${info.cost}`);
   if (info.memory_cost)
