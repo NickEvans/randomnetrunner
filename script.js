@@ -84,11 +84,12 @@ fetchCardInfo = async function (code) {
   const url = `https://netrunnerdb.com/api/2.0/public/card/${code}`;
   return await fetch(url)
     .then((res) => res.json())
-    .then((cjson) => cjson.data[0])
+    .then((cjson) => cjson)
     .catch((err) => console.log(`Error with card #${code}: ${err}`));
 };
 
-function renderCard(info) {
+function renderCard(response) {
+  const info = response.data[0];
   const factionName = factions[info.faction_code].name;
   const type = info.type_code.replace(/^\w/, (c) => c.toUpperCase());
   const icon = factions[info.faction_code].icon;
@@ -141,9 +142,8 @@ function renderCard(info) {
 
   // Image
   const cardImgElement = document.getElementById("cardImg");
-  cardImgElement.src =
-    info.image_url ??
-    `https://netrunnerdb.com/card_image/large/${cardCode}.jpg`;
+  const imageUrl = response.imageUrlTemplate.replace('{code}', cardCode);
+  cardImgElement.src = imageUrl;
   cardImgElement.onload = function() {
     this.style.opacity = 1;
   };
